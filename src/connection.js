@@ -69,6 +69,20 @@ class ConnectionManager extends EventEmitter {
     this.socket.on('direction-counts-update', (data) => {
       this.emit('direction-counts', data);
     });
+
+    this.socket.on('sensor-data', (data) => {
+      this.emit('sensor-data', data);
+    });
+
+    this.socket.on('phone-settings', (data) => {
+      this.emit('phone-settings', data);
+    });
+  }
+
+  sendSettings(settings) {
+    if (this.socket?.connected) {
+      this.socket.emit('desktop-settings', settings);
+    }
   }
 
   disconnect() {

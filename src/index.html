@@ -16,55 +16,81 @@
       background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
       color: #fff;
       min-height: 100vh;
-      padding: 20px;
+      overflow-x: hidden;
     }
     
-    .container {
-      max-width: 360px;
-      margin: 0 auto;
+    .app-container {
+      display: flex;
+      height: 100vh;
+    }
+    
+    .sidebar {
+      width: 280px;
+      background: rgba(0,0,0,0.3);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 16px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    
+    .main-content {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
     }
     
     .header {
-      text-align: center;
-      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     
     .logo {
-      width: 64px;
-      height: 64px;
-      margin-bottom: 12px;
-      border-radius: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
     }
     
     h1 {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 600;
-      margin-bottom: 4px;
     }
     
     .subtitle {
       color: #888;
-      font-size: 14px;
+      font-size: 12px;
     }
     
-    .status-card {
+    .card {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #aaa;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     
     .status-indicator {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: 10px;
+      margin-bottom: 10px;
     }
     
     .status-dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: #666;
       transition: background 0.3s;
@@ -87,34 +113,35 @@
     
     .status-text {
       font-weight: 500;
+      font-size: 14px;
     }
     
     .server-url {
       font-family: monospace;
-      font-size: 12px;
-      color: #888;
+      font-size: 11px;
+      color: #666;
       word-break: break-all;
     }
     
     .input-group {
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     
     .input-group label {
       display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
-      color: #aaa;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: #888;
     }
     
     .input-group input {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
+      border-radius: 6px;
       color: #fff;
-      font-size: 14px;
+      font-size: 12px;
       font-family: monospace;
     }
     
@@ -125,10 +152,10 @@
     
     .btn {
       width: 100%;
-      padding: 12px 20px;
+      padding: 10px 16px;
       border: none;
-      border-radius: 8px;
-      font-size: 14px;
+      border-radius: 6px;
+      font-size: 13px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
@@ -146,26 +173,205 @@
     .btn-secondary {
       background: rgba(255,255,255,0.1);
       color: #fff;
-      margin-top: 8px;
+      margin-top: 6px;
     }
     
     .btn-secondary:hover {
       background: rgba(255,255,255,0.15);
     }
     
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    
+    .stat-box {
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    
+    .stat-label {
+      font-size: 10px;
+      color: #888;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    
+    .color-forward { color: #dc2626; }
+    .color-left { color: #3b82f6; }
+    .color-right { color: #22c55e; }
+    .color-jump { color: #a855f7; }
+    .color-sprint { color: #f97316; }
+    
+    .sensor-canvas {
+      width: 100%;
+      height: 150px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+    }
+    
+    .slider-group {
+      margin-bottom: 16px;
+    }
+    
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    
+    .slider-label {
+      font-size: 12px;
+      color: #aaa;
+    }
+    
+    .slider-value {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      outline: none;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #dc2626;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    
+    .preset-btn {
+      flex: 1;
+      padding: 6px 8px;
+      font-size: 11px;
+      background: rgba(255,255,255,0.1);
+      color: #aaa;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    
+    .preset-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+    
+    .preset-btn.active {
+      background: #dc2626;
+      color: #fff;
+      border-color: #dc2626;
+    }
+    
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .toggle-group:last-child {
+      border-bottom: none;
+    }
+    
+    .toggle-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .toggle-label {
+      font-size: 13px;
+      font-weight: 500;
+    }
+    
+    .toggle-desc {
+      font-size: 11px;
+      color: #666;
+    }
+    
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+    
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+    
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    
+    .toggle-switch input:checked + .toggle-slider {
+      background: #dc2626;
+    }
+    
+    .toggle-switch input:checked + .toggle-slider:before {
+      transform: translateX(20px);
+    }
+    
     .activity-log {
       background: rgba(0,0,0,0.3);
       border-radius: 8px;
-      padding: 12px;
-      height: 120px;
+      height: 200px;
       overflow-y: auto;
       font-family: monospace;
-      font-size: 12px;
+      font-size: 11px;
     }
     
     .log-entry {
-      padding: 4px 0;
+      padding: 6px 10px;
       border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     
     .log-entry:last-child {
@@ -173,161 +379,418 @@
     }
     
     .log-time {
-      color: #666;
-      margin-right: 8px;
+      color: #555;
+      flex-shrink: 0;
     }
     
-    .log-forward { color: #dc2626; }
-    .log-left { color: #3b82f6; }
-    .log-right { color: #22c55e; }
-    .log-jump { color: #a855f7; }
-    
-    .stats {
+    .log-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
       display: flex;
-      justify-content: space-around;
-      margin-top: 16px;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+    
+    .log-icon.forward { background: rgba(220,38,38,0.2); color: #dc2626; }
+    .log-icon.left { background: rgba(59,130,246,0.2); color: #3b82f6; }
+    .log-icon.right { background: rgba(34,197,94,0.2); color: #22c55e; }
+    .log-icon.jump { background: rgba(168,85,247,0.2); color: #a855f7; }
+    .log-icon.sprint { background: rgba(249,115,22,0.2); color: #f97316; }
+    
+    .log-message {
+      flex: 1;
+      color: #ccc;
+    }
+    
+    .log-badge {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: rgba(249,115,22,0.2);
+      color: #f97316;
+    }
+    
+    .direction-indicator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      margin: 12px 0;
+    }
+    
+    .direction-arrow {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.1s;
+    }
+    
+    .direction-arrow.active-forward {
+      background: rgba(220,38,38,0.3);
+      box-shadow: 0 0 12px rgba(220,38,38,0.4);
+    }
+    
+    .direction-arrow.active-left {
+      background: rgba(59,130,246,0.3);
+      box-shadow: 0 0 12px rgba(59,130,246,0.4);
+    }
+    
+    .direction-arrow.active-right {
+      background: rgba(34,197,94,0.3);
+      box-shadow: 0 0 12px rgba(34,197,94,0.4);
+    }
+    
+    .direction-arrow.active-jump {
+      background: rgba(168,85,247,0.3);
+      box-shadow: 0 0 12px rgba(168,85,247,0.4);
+    }
+    
+    .sensor-info {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    
+    .sensor-item {
       text-align: center;
+      padding: 8px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 6px;
     }
     
-    .stat-item {
-      padding: 8px 16px;
+    .sensor-label {
+      font-size: 10px;
+      color: #666;
     }
     
-    .stat-value {
-      font-size: 24px;
+    .sensor-value {
+      font-size: 14px;
       font-weight: 600;
+      font-family: monospace;
     }
     
-    .stat-label {
+    .phone-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    
+    .phone-status.disconnected {
+      background: rgba(239,68,68,0.1);
+      border-color: rgba(239,68,68,0.2);
+    }
+    
+    .phone-icon {
+      font-size: 16px;
+    }
+    
+    .phone-text {
+      font-size: 12px;
+    }
+    
+    .steps-per-min {
+      text-align: center;
+      padding: 16px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+    
+    .spm-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: #dc2626;
+    }
+    
+    .spm-label {
       font-size: 11px;
       color: #888;
       text-transform: uppercase;
     }
-    
-    .discovery-section {
-      margin-top: 16px;
-    }
-    
-    .discovery-section h3 {
-      font-size: 14px;
-      color: #888;
-      margin-bottom: 8px;
-    }
-    
-    .discovered-server {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 6px;
-      margin-bottom: 6px;
-    }
-    
-    .discovered-server button {
-      padding: 6px 12px;
-      font-size: 12px;
-    }
-    
-    .instructions {
-      margin-top: 16px;
-      padding: 12px;
-      background: rgba(255,255,255,0.03);
-      border-radius: 8px;
-      font-size: 13px;
-      color: #888;
-      line-height: 1.5;
-    }
-    
-    .instructions h4 {
-      color: #aaa;
-      margin-bottom: 8px;
-    }
-    
-    .instructions ol {
-      padding-left: 20px;
-    }
-    
-    .instructions li {
-      margin-bottom: 4px;
-    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <img src="../assets/icon.png" alt="VSteps" class="logo" onerror="this.style.display='none'">
-      <h1>VSteps Desktop</h1>
-      <p class="subtitle">Walk to Control Your PC</p>
-    </div>
-    
-    <div class="status-card">
-      <div class="status-indicator">
-        <div class="status-dot" id="statusDot"></div>
-        <span class="status-text" id="statusText">Disconnected</span>
-      </div>
-      <div class="server-url" id="serverUrl">No server connected</div>
-    </div>
-    
-    <div class="status-card">
-      <div class="input-group">
-        <label>Server URL (from your phone)</label>
-        <input type="text" id="serverInput" placeholder="https://your-app.replit.app">
-      </div>
-      <button class="btn btn-primary" id="connectBtn">Connect</button>
-      <button class="btn btn-secondary" id="disconnectBtn" style="display:none">Disconnect</button>
-    </div>
-    
-    <div class="status-card" id="discoveryCard" style="display:none">
-      <div class="discovery-section">
-        <h3>Discovered Servers</h3>
-        <div id="discoveredServers"></div>
-      </div>
-    </div>
-    
-    <div class="status-card">
-      <h3 style="font-size: 14px; color: #888; margin-bottom: 12px;">Activity Log</h3>
-      <div class="activity-log" id="activityLog">
-        <div class="log-entry">
-          <span class="log-time">--:--:--</span>
-          Waiting for connection...
+  <div class="app-container">
+    <div class="sidebar">
+      <div class="header">
+        <img src="../assets/icon.png" alt="VSteps" class="logo" onerror="this.style.display='none'">
+        <div>
+          <h1>VSteps</h1>
+          <p class="subtitle">Desktop Controller</p>
         </div>
       </div>
       
-      <div class="stats">
-        <div class="stat-item">
-          <div class="stat-value log-forward" id="forwardCount">0</div>
-          <div class="stat-label">Forward</div>
+      <div class="card">
+        <div class="card-title">Connection</div>
+        <div class="status-indicator">
+          <div class="status-dot" id="statusDot"></div>
+          <span class="status-text" id="statusText">Disconnected</span>
         </div>
-        <div class="stat-item">
-          <div class="stat-value log-left" id="leftCount">0</div>
-          <div class="stat-label">Left</div>
+        <div class="server-url" id="serverUrl">No server connected</div>
+        
+        <div class="input-group" style="margin-top: 12px;">
+          <label>Server URL</label>
+          <input type="text" id="serverInput" placeholder="https://your-app.replit.app">
         </div>
-        <div class="stat-item">
-          <div class="stat-value log-right" id="rightCount">0</div>
-          <div class="stat-label">Right</div>
+        <button class="btn btn-primary" id="connectBtn">Connect</button>
+        <button class="btn btn-secondary" id="disconnectBtn" style="display:none">Disconnect</button>
+      </div>
+      
+      <div class="card" id="phoneStatusCard" style="display:none;">
+        <div class="card-title">Phone Status</div>
+        <div class="phone-status disconnected" id="phoneStatus">
+          <span class="phone-icon">📱</span>
+          <span class="phone-text" id="phoneStatusText">Waiting for phone...</span>
         </div>
-        <div class="stat-item">
-          <div class="stat-value log-jump" id="jumpCount">0</div>
-          <div class="stat-label">Jump</div>
+        <div class="sensor-info">
+          <div class="sensor-item">
+            <div class="sensor-label">Rate</div>
+            <div class="sensor-value" id="sensorRate">--</div>
+          </div>
+          <div class="sensor-item">
+            <div class="sensor-label">Y-Axis</div>
+            <div class="sensor-value" id="sensorY">--</div>
+          </div>
+          <div class="sensor-item">
+            <div class="sensor-label">X-Axis</div>
+            <div class="sensor-value" id="sensorX">--</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-title">Controls</div>
+        
+        <div class="toggle-group">
+          <div class="toggle-info">
+            <span class="toggle-label">⚡ Sprint Mode</span>
+            <span class="toggle-desc">Hold Shift for intense steps</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="sprintToggle" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        
+        <div class="toggle-group">
+          <div class="toggle-info">
+            <span class="toggle-label">🖱️ Camera Control</span>
+            <span class="toggle-desc">Move mouse with direction</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="cameraToggle">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-title">Sensitivity</div>
+        
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">Sensitivity (1-100)</span>
+            <span class="slider-value" id="sensitivityValue">50</span>
+          </div>
+          <input type="range" id="sensitivitySlider" min="1" max="100" value="50" step="1">
+          <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; margin-top: 2px;">
+            <span>Hard (4.0 m/s²)</span>
+            <span>Easy (0.5 m/s²)</span>
+          </div>
+        </div>
+        
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">Lateral (Left/Right)</span>
+            <span class="slider-value" id="lateralValue">8</span>
+          </div>
+          <input type="range" id="lateralSlider" min="2" max="15" value="8" step="0.5">
+        </div>
+        
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">Key Hold Duration</span>
+            <span class="slider-value" id="holdValue">2.0s</span>
+          </div>
+          <input type="range" id="holdSlider" min="500" max="5000" value="2000" step="100">
+        </div>
+        
+        <div class="slider-group" id="sprintThresholdGroup">
+          <div class="slider-header">
+            <span class="slider-label">Sprint Threshold</span>
+            <span class="slider-value" id="sprintValue">18</span>
+          </div>
+          <input type="range" id="sprintSlider" min="10" max="30" value="18" step="1">
+        </div>
+        
+        <div class="slider-group" id="mouseSpeedGroup" style="display:none;">
+          <div class="slider-header">
+            <span class="slider-label">Mouse Sensitivity</span>
+            <span class="slider-value" id="mouseValue">50</span>
+          </div>
+          <input type="range" id="mouseSlider" min="10" max="200" value="50" step="5">
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-title">Advanced Tuning</div>
+        
+        <div style="display: flex; gap: 6px; margin-bottom: 12px;">
+          <button class="preset-btn" id="presetQuick">Quick Response</button>
+          <button class="preset-btn active" id="presetBalanced">Balanced</button>
+          <button class="preset-btn" id="presetStable">Stable</button>
+        </div>
+        
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">EMA Alpha (α)</span>
+            <span class="slider-value" id="alphaValue">0.20</span>
+          </div>
+          <input type="range" id="alphaSlider" min="0.05" max="0.6" value="0.2" step="0.05">
+          <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; margin-top: 2px;">
+            <span>Stable (0.05)</span>
+            <span>Quick (0.6)</span>
+          </div>
+        </div>
+        
+        <div class="slider-group">
+          <div class="slider-header">
+            <span class="slider-label">Hold Window</span>
+            <span class="slider-value" id="stepDurationValue">450ms</span>
+          </div>
+          <input type="range" id="stepDurationSlider" min="200" max="700" value="450" step="25">
+          <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; margin-top: 2px;">
+            <span>Snappy (200ms)</span>
+            <span>Slow (700ms)</span>
+          </div>
+        </div>
+        
+        <div class="toggle-group" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #333;">
+          <label class="toggle-label">
+            <input type="checkbox" id="burstToggle" checked>
+            <span>Burst Mode (rapid taps instead of hold)</span>
+          </label>
+        </div>
+        
+        <div class="toggle-group" style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #333;">
+          <label class="toggle-label">
+            <input type="checkbox" id="disableWKeyToggle">
+            <span>Disable Physical W Key</span>
+          </label>
+          <div style="font-size: 11px; color: #666; margin-top: 4px; padding-left: 24px;">
+            Block your keyboard's W key while walking (prevents double input)
+          </div>
+        </div>
+        
+        <div class="slider-group" id="burstPressesGroup" style="display: block;">
+          <div class="slider-header">
+            <span class="slider-label">Presses Per Step</span>
+            <span class="slider-value" id="burstPressesValue">16x</span>
+          </div>
+          <input type="range" id="burstPressesSlider" min="2" max="16" value="16" step="1">
+          <div style="display: flex; justify-content: space-between; font-size: 10px; color: #666; margin-top: 2px;">
+            <span>Light (2x)</span>
+            <span>Heavy (16x)</span>
+          </div>
         </div>
       </div>
     </div>
     
-    <div class="instructions">
-      <h4>How to Connect</h4>
-      <ol>
-        <li>Open VSteps on your phone browser</li>
-        <li>Copy the server URL shown on your phone</li>
-        <li>Paste it above and click Connect</li>
-        <li>Start walking to control your PC!</li>
-      </ol>
+    <div class="main-content">
+      <div class="card">
+        <div class="card-title">Direction Tracker</div>
+        <div class="direction-indicator">
+          <div class="direction-arrow" id="arrowLeft">←</div>
+          <div class="direction-arrow" id="arrowForward">↑</div>
+          <div class="direction-arrow" id="arrowRight">→</div>
+          <div class="direction-arrow" id="arrowJump">⬆</div>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-value color-forward" id="forwardCount">0</div>
+            <div class="stat-label">Forward (W)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value color-left" id="leftCount">0</div>
+            <div class="stat-label">Left (A)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value color-right" id="rightCount">0</div>
+            <div class="stat-label">Right (D)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value color-jump" id="jumpCount">0</div>
+            <div class="stat-label">Jump (Space)</div>
+          </div>
+        </div>
+        
+        <div class="stats-grid" style="margin-top: 8px;">
+          <div class="stat-box">
+            <div class="stat-value color-sprint" id="sprintCount">0</div>
+            <div class="stat-label">Sprints (Shift)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="totalCount" style="color: #888;">0</div>
+            <div class="stat-label">Total Steps</div>
+          </div>
+        </div>
+        
+        <div class="steps-per-min">
+          <div class="spm-value" id="stepsPerMin">0</div>
+          <div class="spm-label">Steps per Minute</div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-title">Sensor Visualization</div>
+        <canvas class="sensor-canvas" id="sensorCanvas"></canvas>
+        <div class="sensor-info" style="margin-top: 8px;">
+          <div class="sensor-item" style="border-left: 3px solid #dc2626;">
+            <div class="sensor-label">Y-Axis (Vertical)</div>
+            <div class="sensor-value color-forward" id="liveY">0.0</div>
+          </div>
+          <div class="sensor-item" style="border-left: 3px solid #22c55e;">
+            <div class="sensor-label">X-Axis (Lateral)</div>
+            <div class="sensor-value color-right" id="liveX">0.0</div>
+          </div>
+          <div class="sensor-item" style="border-left: 3px solid #a855f7;">
+            <div class="sensor-label">Gyro Z (Yaw)</div>
+            <div class="sensor-value color-jump" id="liveZ">0.0</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-title">Step History</div>
+        <div class="activity-log" id="activityLog">
+          <div class="log-entry">
+            <span class="log-time">--:--:--</span>
+            <span class="log-message">Waiting for connection...</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   
   <script>
     const { ipcRenderer } = require('electron');
     
+    // DOM Elements
     const statusDot = document.getElementById('statusDot');
     const statusText = document.getElementById('statusText');
     const serverUrl = document.getElementById('serverUrl');
@@ -335,21 +798,88 @@
     const connectBtn = document.getElementById('connectBtn');
     const disconnectBtn = document.getElementById('disconnectBtn');
     const activityLog = document.getElementById('activityLog');
-    const discoveryCard = document.getElementById('discoveryCard');
-    const discoveredServers = document.getElementById('discoveredServers');
+    const phoneStatusCard = document.getElementById('phoneStatusCard');
+    const phoneStatus = document.getElementById('phoneStatus');
+    const phoneStatusText = document.getElementById('phoneStatusText');
+    const sensorCanvas = document.getElementById('sensorCanvas');
     
-    let counts = { forward: 0, left: 0, right: 0, jump: 0 };
+    // Sliders
+    const sensitivitySlider = document.getElementById('sensitivitySlider');
+    const lateralSlider = document.getElementById('lateralSlider');
+    const holdSlider = document.getElementById('holdSlider');
+    const sprintSlider = document.getElementById('sprintSlider');
+    const mouseSlider = document.getElementById('mouseSlider');
+    const sprintToggle = document.getElementById('sprintToggle');
+    const cameraToggle = document.getElementById('cameraToggle');
+    const alphaSlider = document.getElementById('alphaSlider');
+    const stepDurationSlider = document.getElementById('stepDurationSlider');
+    const presetQuick = document.getElementById('presetQuick');
+    const presetBalanced = document.getElementById('presetBalanced');
+    const presetStable = document.getElementById('presetStable');
+    const burstToggle = document.getElementById('burstToggle');
+    const burstPressesSlider = document.getElementById('burstPressesSlider');
+    const disableWKeyToggle = document.getElementById('disableWKeyToggle');
     
-    function addLog(message, type = '') {
-      const time = new Date().toLocaleTimeString();
-      const entry = document.createElement('div');
-      entry.className = 'log-entry';
-      entry.innerHTML = `<span class="log-time">${time}</span><span class="log-${type}">${message}</span>`;
-      activityLog.insertBefore(entry, activityLog.firstChild);
+    // Direction arrows
+    const arrowForward = document.getElementById('arrowForward');
+    const arrowLeft = document.getElementById('arrowLeft');
+    const arrowRight = document.getElementById('arrowRight');
+    const arrowJump = document.getElementById('arrowJump');
+    
+    // State
+    let counts = { forward: 0, left: 0, right: 0, jump: 0, sprint: 0, total: 0 };
+    let sensorHistory = { y: [], x: [], z: [] };
+    let stepTimes = [];
+    let isConnected = false;
+    
+    // Settings (synced with phone)
+    let settings = {
+      sensitivity: 50,
+      lateralSensitivity: 8,
+      holdDuration: 2000,
+      sprintThreshold: 18,
+      sprintEnabled: true,
+      cameraEnabled: false,
+      mouseSensitivity: 50,
+      emaAlpha: 0.2,
+      stepDuration: 450,
+      tuningPreset: 'balanced',
+      burstMode: true,
+      burstPresses: 16,
+      disableWKey: false
+    };
+    
+    const tuningPresets = {
+      quick: { alpha: 0.5, duration: 350 },
+      balanced: { alpha: 0.2, duration: 450 },
+      stable: { alpha: 0.1, duration: 550 }
+    };
+    
+    function mapSensitivityToThreshold(sens) {
+      const minThreshold = 0.5;
+      const maxThreshold = 4.0;
+      return maxThreshold - ((sens - 1) / 99) * (maxThreshold - minThreshold);
+    }
+    
+    function applyPreset(preset) {
+      const config = tuningPresets[preset];
+      if (!config) return;
       
-      while (activityLog.children.length > 50) {
-        activityLog.removeChild(activityLog.lastChild);
-      }
+      settings.emaAlpha = config.alpha;
+      settings.stepDuration = config.duration;
+      settings.tuningPreset = preset;
+      
+      alphaSlider.value = config.alpha;
+      stepDurationSlider.value = config.duration;
+      document.getElementById('alphaValue').textContent = config.alpha.toFixed(2);
+      document.getElementById('stepDurationValue').textContent = config.duration + 'ms';
+      
+      presetQuick.classList.remove('active');
+      presetBalanced.classList.remove('active');
+      presetStable.classList.remove('active');
+      document.getElementById(`preset${preset.charAt(0).toUpperCase() + preset.slice(1)}`).classList.add('active');
+      
+      syncSettingsToPhone();
     }
     
     function updateCounts() {
@@ -357,8 +887,200 @@
       document.getElementById('leftCount').textContent = counts.left;
       document.getElementById('rightCount').textContent = counts.right;
       document.getElementById('jumpCount').textContent = counts.jump;
+      document.getElementById('sprintCount').textContent = counts.sprint;
+      document.getElementById('totalCount').textContent = counts.total;
     }
     
+    function updateStepsPerMinute() {
+      const now = Date.now();
+      stepTimes = stepTimes.filter(t => now - t < 60000);
+      document.getElementById('stepsPerMin').textContent = stepTimes.length;
+    }
+    
+    function addLog(message, type = '', isSprint = false) {
+      const time = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      
+      let iconClass = type || 'forward';
+      let icon = '↑';
+      if (type === 'left') icon = '←';
+      else if (type === 'right') icon = '→';
+      else if (type === 'jump') icon = '⬆';
+      else if (type === 'forward') icon = '↑';
+      
+      if (isSprint) iconClass = 'sprint';
+      
+      let badgeHtml = isSprint ? '<span class="log-badge">SPRINT</span>' : '';
+      
+      entry.innerHTML = `
+        <span class="log-time">${time}</span>
+        <div class="log-icon ${iconClass}">${icon}</div>
+        <span class="log-message">${message}</span>
+        ${badgeHtml}
+      `;
+      activityLog.insertBefore(entry, activityLog.firstChild);
+      
+      while (activityLog.children.length > 100) {
+        activityLog.removeChild(activityLog.lastChild);
+      }
+    }
+    
+    function flashDirection(direction) {
+      const arrows = { forward: arrowForward, left: arrowLeft, right: arrowRight, jump: arrowJump };
+      const arrow = arrows[direction];
+      if (arrow) {
+        arrow.classList.add(`active-${direction}`);
+        setTimeout(() => arrow.classList.remove(`active-${direction}`), 300);
+      }
+    }
+    
+    function drawSensorGraph() {
+      const canvas = sensorCanvas;
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      
+      ctx.fillStyle = 'rgba(0,0,0,0.3)';
+      ctx.fillRect(0, 0, rect.width, rect.height);
+      
+      const maxVal = 30;
+      const sectionHeight = rect.height / 3;
+      
+      function drawLine(data, yOffset, color, threshold) {
+        const centerY = yOffset + sectionHeight / 2;
+        
+        // Threshold lines
+        ctx.strokeStyle = 'rgba(220,38,38,0.3)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        const thresholdY1 = centerY - (threshold / maxVal) * (sectionHeight / 2);
+        const thresholdY2 = centerY + (threshold / maxVal) * (sectionHeight / 2);
+        ctx.beginPath();
+        ctx.moveTo(0, thresholdY1);
+        ctx.lineTo(rect.width, thresholdY1);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, thresholdY2);
+        ctx.lineTo(rect.width, thresholdY2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        
+        // Data line
+        if (data.length > 1) {
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          data.forEach((val, i) => {
+            const x = (i / (data.length - 1)) * rect.width;
+            const y = centerY - (val / maxVal) * (sectionHeight / 2);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.stroke();
+        }
+      }
+      
+      const threshold = mapSensitivityToThreshold(settings.sensitivity);
+      drawLine(sensorHistory.y, 0, '#dc2626', threshold);
+      drawLine(sensorHistory.x, sectionHeight, '#22c55e', settings.lateralSensitivity);
+      drawLine(sensorHistory.z, sectionHeight * 2, '#a855f7', 25);
+    }
+    
+    function syncSettingsToPhone() {
+      ipcRenderer.send('settings-update', settings);
+    }
+    
+    // Slider event listeners
+    sensitivitySlider.addEventListener('input', (e) => {
+      settings.sensitivity = parseInt(e.target.value);
+      const threshold = mapSensitivityToThreshold(settings.sensitivity);
+      document.getElementById('sensitivityValue').textContent = `${settings.sensitivity} (${threshold.toFixed(2)} m/s²)`;
+      syncSettingsToPhone();
+    });
+    
+    lateralSlider.addEventListener('input', (e) => {
+      settings.lateralSensitivity = parseFloat(e.target.value);
+      document.getElementById('lateralValue').textContent = settings.lateralSensitivity;
+      syncSettingsToPhone();
+    });
+    
+    holdSlider.addEventListener('input', (e) => {
+      settings.holdDuration = parseInt(e.target.value);
+      document.getElementById('holdValue').textContent = (settings.holdDuration / 1000).toFixed(1) + 's';
+      syncSettingsToPhone();
+    });
+    
+    sprintSlider.addEventListener('input', (e) => {
+      settings.sprintThreshold = parseInt(e.target.value);
+      document.getElementById('sprintValue').textContent = settings.sprintThreshold;
+      syncSettingsToPhone();
+    });
+    
+    mouseSlider.addEventListener('input', (e) => {
+      settings.mouseSensitivity = parseInt(e.target.value);
+      document.getElementById('mouseValue').textContent = settings.mouseSensitivity;
+      syncSettingsToPhone();
+    });
+    
+    sprintToggle.addEventListener('change', (e) => {
+      settings.sprintEnabled = e.target.checked;
+      document.getElementById('sprintThresholdGroup').style.display = e.target.checked ? 'block' : 'none';
+      syncSettingsToPhone();
+    });
+    
+    cameraToggle.addEventListener('change', (e) => {
+      settings.cameraEnabled = e.target.checked;
+      document.getElementById('mouseSpeedGroup').style.display = e.target.checked ? 'block' : 'none';
+      syncSettingsToPhone();
+    });
+    
+    // Advanced tuning
+    alphaSlider.addEventListener('input', (e) => {
+      settings.emaAlpha = parseFloat(e.target.value);
+      settings.tuningPreset = 'custom';
+      document.getElementById('alphaValue').textContent = settings.emaAlpha.toFixed(2);
+      presetQuick.classList.remove('active');
+      presetBalanced.classList.remove('active');
+      presetStable.classList.remove('active');
+      syncSettingsToPhone();
+    });
+    
+    stepDurationSlider.addEventListener('input', (e) => {
+      settings.stepDuration = parseInt(e.target.value);
+      settings.tuningPreset = 'custom';
+      document.getElementById('stepDurationValue').textContent = settings.stepDuration + 'ms';
+      presetQuick.classList.remove('active');
+      presetBalanced.classList.remove('active');
+      presetStable.classList.remove('active');
+      syncSettingsToPhone();
+    });
+    
+    presetQuick.addEventListener('click', () => applyPreset('quick'));
+    presetBalanced.addEventListener('click', () => applyPreset('balanced'));
+    presetStable.addEventListener('click', () => applyPreset('stable'));
+    
+    burstToggle.addEventListener('change', (e) => {
+      settings.burstMode = e.target.checked;
+      document.getElementById('burstPressesGroup').style.display = e.target.checked ? 'block' : 'none';
+      syncSettingsToPhone();
+    });
+    
+    burstPressesSlider.addEventListener('input', (e) => {
+      settings.burstPresses = parseInt(e.target.value);
+      document.getElementById('burstPressesValue').textContent = settings.burstPresses + 'x';
+      syncSettingsToPhone();
+    });
+    
+    disableWKeyToggle.addEventListener('change', (e) => {
+      settings.disableWKey = e.target.checked;
+      ipcRenderer.send('toggle-disable-w-key', settings.disableWKey);
+    });
+    
+    // Connection
     connectBtn.addEventListener('click', () => {
       const url = serverInput.value.trim();
       if (url) {
@@ -372,13 +1094,16 @@
       ipcRenderer.send('disconnect');
     });
     
+    // IPC Events
     ipcRenderer.on('connection-status', (event, status) => {
-      if (status === 'connected') {
+      isConnected = status === 'connected';
+      if (isConnected) {
         statusDot.className = 'status-dot connected';
         statusText.textContent = 'Connected';
         serverUrl.textContent = serverInput.value;
         connectBtn.style.display = 'none';
         disconnectBtn.style.display = 'block';
+        phoneStatusCard.style.display = 'block';
         addLog('Connected to server');
       } else {
         statusDot.className = 'status-dot';
@@ -386,40 +1111,149 @@
         serverUrl.textContent = 'No server connected';
         connectBtn.style.display = 'block';
         disconnectBtn.style.display = 'none';
+        phoneStatus.className = 'phone-status disconnected';
+        phoneStatusText.textContent = 'Waiting for phone...';
         addLog('Disconnected from server');
       }
     });
     
     ipcRenderer.on('movement', (event, data) => {
       const direction = data.direction;
-      counts[direction] = (counts[direction] || 0) + 1;
+      counts[direction]++;
+      counts.total++;
+      if (data.isSprint) counts.sprint++;
+      
+      stepTimes.push(Date.now());
       updateCounts();
-      addLog(`Movement: ${direction.toUpperCase()} -> Key: ${direction === 'forward' ? 'W' : direction === 'left' ? 'A' : 'D'}`, direction);
+      updateStepsPerMinute();
+      flashDirection(direction);
+      
+      const keyMap = { forward: 'W', left: 'A', right: 'D' };
+      addLog(`${direction.toUpperCase()} → ${keyMap[direction]}`, direction, data.isSprint);
     });
     
     ipcRenderer.on('jump', () => {
       counts.jump++;
       updateCounts();
-      addLog('JUMP -> Key: SPACE', 'jump');
+      flashDirection('jump');
+      addLog('JUMP → SPACE', 'jump');
+    });
+    
+    ipcRenderer.on('sensor-data', (event, data) => {
+      // Update sensor history for graph
+      sensorHistory.y.push(data.ay || 0);
+      sensorHistory.x.push(data.ax || 0);
+      sensorHistory.z.push(data.gz || 0);
+      
+      // Keep only last 100 samples
+      if (sensorHistory.y.length > 100) sensorHistory.y.shift();
+      if (sensorHistory.x.length > 100) sensorHistory.x.shift();
+      if (sensorHistory.z.length > 100) sensorHistory.z.shift();
+      
+      // Update live values
+      document.getElementById('liveY').textContent = (data.ay || 0).toFixed(1);
+      document.getElementById('liveX').textContent = (data.ax || 0).toFixed(1);
+      document.getElementById('liveZ').textContent = (data.gz || 0).toFixed(1);
+      
+      // Update phone status
+      phoneStatus.className = 'phone-status';
+      phoneStatusText.textContent = 'Phone connected & streaming';
+      
+      if (data.sensorRate) {
+        document.getElementById('sensorRate').textContent = data.sensorRate + ' Hz';
+      }
+    });
+    
+    ipcRenderer.on('phone-settings', (event, phoneSettings) => {
+      // Sync settings from phone when it connects
+      if (phoneSettings.sensitivity !== undefined) {
+        settings.sensitivity = phoneSettings.sensitivity;
+        sensitivitySlider.value = settings.sensitivity;
+        const threshold = mapSensitivityToThreshold(settings.sensitivity);
+        document.getElementById('sensitivityValue').textContent = `${settings.sensitivity} (${threshold.toFixed(2)} m/s²)`;
+      }
+      if (phoneSettings.lateralSensitivity !== undefined) {
+        settings.lateralSensitivity = phoneSettings.lateralSensitivity;
+        lateralSlider.value = settings.lateralSensitivity;
+        document.getElementById('lateralValue').textContent = settings.lateralSensitivity;
+      }
+      if (phoneSettings.holdDuration !== undefined) {
+        settings.holdDuration = phoneSettings.holdDuration;
+        holdSlider.value = settings.holdDuration;
+        document.getElementById('holdValue').textContent = (settings.holdDuration / 1000).toFixed(1) + 's';
+      }
+      if (phoneSettings.sprintThreshold !== undefined) {
+        settings.sprintThreshold = phoneSettings.sprintThreshold;
+        sprintSlider.value = settings.sprintThreshold;
+        document.getElementById('sprintValue').textContent = settings.sprintThreshold;
+      }
+      if (phoneSettings.sprintEnabled !== undefined) {
+        settings.sprintEnabled = phoneSettings.sprintEnabled;
+        sprintToggle.checked = settings.sprintEnabled;
+        document.getElementById('sprintThresholdGroup').style.display = settings.sprintEnabled ? 'block' : 'none';
+      }
+      if (phoneSettings.cameraEnabled !== undefined) {
+        settings.cameraEnabled = phoneSettings.cameraEnabled;
+        cameraToggle.checked = settings.cameraEnabled;
+        document.getElementById('mouseSpeedGroup').style.display = settings.cameraEnabled ? 'block' : 'none';
+      }
+      if (phoneSettings.mouseSensitivity !== undefined) {
+        settings.mouseSensitivity = phoneSettings.mouseSensitivity;
+        mouseSlider.value = settings.mouseSensitivity;
+        document.getElementById('mouseValue').textContent = settings.mouseSensitivity;
+      }
+      if (phoneSettings.emaAlpha !== undefined) {
+        settings.emaAlpha = phoneSettings.emaAlpha;
+        alphaSlider.value = settings.emaAlpha;
+        document.getElementById('alphaValue').textContent = settings.emaAlpha.toFixed(2);
+      }
+      if (phoneSettings.stepDuration !== undefined) {
+        settings.stepDuration = phoneSettings.stepDuration;
+        stepDurationSlider.value = settings.stepDuration;
+        document.getElementById('stepDurationValue').textContent = settings.stepDuration + 'ms';
+      }
+      if (phoneSettings.tuningPreset !== undefined) {
+        settings.tuningPreset = phoneSettings.tuningPreset;
+        presetQuick.classList.remove('active');
+        presetBalanced.classList.remove('active');
+        presetStable.classList.remove('active');
+        if (phoneSettings.tuningPreset !== 'custom') {
+          document.getElementById(`preset${phoneSettings.tuningPreset.charAt(0).toUpperCase() + phoneSettings.tuningPreset.slice(1)}`).classList.add('active');
+        }
+      }
+      if (phoneSettings.burstMode !== undefined) {
+        settings.burstMode = phoneSettings.burstMode;
+        burstToggle.checked = settings.burstMode;
+        document.getElementById('burstPressesGroup').style.display = settings.burstMode ? 'block' : 'none';
+      }
+      if (phoneSettings.burstPresses !== undefined) {
+        settings.burstPresses = phoneSettings.burstPresses;
+        burstPressesSlider.value = settings.burstPresses;
+        document.getElementById('burstPressesValue').textContent = settings.burstPresses + 'x';
+      }
+    });
+    
+    ipcRenderer.on('w-key-block-status', (event, status) => {
+      if (!status.success) {
+        disableWKeyToggle.checked = false;
+        settings.disableWKey = false;
+        if (status.error) {
+          addLog('W key blocking: ' + status.error, 'forward', false);
+        }
+      } else if (status.enabled) {
+        addLog('Physical W key is now BLOCKED', 'forward', false);
+      }
     });
     
     ipcRenderer.on('server-found', (event, url) => {
-      discoveryCard.style.display = 'block';
-      const serverDiv = document.createElement('div');
-      serverDiv.className = 'discovered-server';
-      serverDiv.innerHTML = `
-        <span style="font-family: monospace; font-size: 12px;">${url}</span>
-        <button class="btn btn-primary" onclick="connectToServer('${url}')">Connect</button>
-      `;
-      discoveredServers.appendChild(serverDiv);
       addLog(`Found server: ${url}`);
     });
     
-    window.connectToServer = (url) => {
-      serverInput.value = url;
-      connectBtn.click();
-    };
+    // Draw sensor graph periodically
+    setInterval(drawSensorGraph, 100);
+    setInterval(updateStepsPerMinute, 1000);
     
+    // Request initial status
     ipcRenderer.send('get-status');
   </script>
 </body>
