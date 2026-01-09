@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VSteps Desktop</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 360px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    
+    .logo {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 12px;
+      border-radius: 12px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    
+    .subtitle {
+      color: #888;
+      font-size: 14px;
+    }
+    
+    .status-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #666;
+      transition: background 0.3s;
+    }
+    
+    .status-dot.connected {
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+    }
+    
+    .status-dot.connecting {
+      background: #eab308;
+      animation: pulse 1s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .status-text {
+      font-weight: 500;
+    }
+    
+    .server-url {
+      font-family: monospace;
+      font-size: 12px;
+      color: #888;
+      word-break: break-all;
+    }
+    
+    .input-group {
+      margin-bottom: 16px;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: #aaa;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      font-family: monospace;
+    }
+    
+    .input-group input:focus {
+      outline: none;
+      border-color: #dc2626;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background: #dc2626;
+      color: #fff;
+    }
+    
+    .btn-primary:hover {
+      background: #b91c1c;
+    }
+    
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      margin-top: 8px;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.15);
+    }
+    
+    .activity-log {
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 12px;
+      height: 120px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    
+    .log-entry {
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .log-entry:last-child {
+      border-bottom: none;
+    }
+    
+    .log-time {
+      color: #666;
+      margin-right: 8px;
+    }
+    
+    .log-forward { color: #dc2626; }
+    .log-left { color: #3b82f6; }
+    .log-right { color: #22c55e; }
+    .log-jump { color: #a855f7; }
+    
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 16px;
+      text-align: center;
+    }
+    
+    .stat-item {
+      padding: 8px 16px;
+    }
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: 600;
+    }
+    
+    .stat-label {
+      font-size: 11px;
+      color: #888;
+      text-transform: uppercase;
+    }
+    
+    .discovery-section {
+      margin-top: 16px;
+    }
+    
+    .discovery-section h3 {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    
+    .discovered-server {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+    
+    .discovered-server button {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+    
+    .instructions {
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      font-size: 13px;
+      color: #888;
+      line-height: 1.5;
+    }
+    
+    .instructions h4 {
+      color: #aaa;
+      margin-bottom: 8px;
+    }
+    
+    .instructions ol {
+      padding-left: 20px;
+    }
+    
+    .instructions li {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="../assets/icon.png" alt="VSteps" class="logo" onerror="this.style.display='none'">
+      <h1>VSteps Desktop</h1>
+      <p class="subtitle">Walk to Control Your PC</p>
+    </div>
+    
+    <div class="status-card">
+      <div class="status-indicator">
+        <div class="status-dot" id="statusDot"></div>
+        <span class="status-text" id="statusText">Disconnected</span>
+      </div>
+      <div class="server-url" id="serverUrl">No server connected</div>
+    </div>
+    
+    <div class="status-card">
+      <div class="input-group">
+        <label>Server URL (from your phone)</label>
+        <input type="text" id="serverInput" placeholder="https://your-app.replit.app">
+      </div>
+      <button class="btn btn-primary" id="connectBtn">Connect</button>
+      <button class="btn btn-secondary" id="disconnectBtn" style="display:none">Disconnect</button>
+    </div>
+    
+    <div class="status-card" id="discoveryCard" style="display:none">
+      <div class="discovery-section">
+        <h3>Discovered Servers</h3>
+        <div id="discoveredServers"></div>
+      </div>
+    </div>
+    
+    <div class="status-card">
+      <h3 style="font-size: 14px; color: #888; margin-bottom: 12px;">Activity Log</h3>
+      <div class="activity-log" id="activityLog">
+        <div class="log-entry">
+          <span class="log-time">--:--:--</span>
+          Waiting for connection...
+        </div>
+      </div>
+      
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value log-forward" id="forwardCount">0</div>
+          <div class="stat-label">Forward</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value log-left" id="leftCount">0</div>
+          <div class="stat-label">Left</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value log-right" id="rightCount">0</div>
+          <div class="stat-label">Right</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value log-jump" id="jumpCount">0</div>
+          <div class="stat-label">Jump</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="instructions">
+      <h4>How to Connect</h4>
+      <ol>
+        <li>Open VSteps on your phone browser</li>
+        <li>Copy the server URL shown on your phone</li>
+        <li>Paste it above and click Connect</li>
+        <li>Start walking to control your PC!</li>
+      </ol>
+    </div>
+  </div>
+  
+  <script>
+    const { ipcRenderer } = require('electron');
+    
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const serverUrl = document.getElementById('serverUrl');
+    const serverInput = document.getElementById('serverInput');
+    const connectBtn = document.getElementById('connectBtn');
+    const disconnectBtn = document.getElementById('disconnectBtn');
+    const activityLog = document.getElementById('activityLog');
+    const discoveryCard = document.getElementById('discoveryCard');
+    const discoveredServers = document.getElementById('discoveredServers');
+    
+    let counts = { forward: 0, left: 0, right: 0, jump: 0 };
+    
+    function addLog(message, type = '') {
+      const time = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.innerHTML = `<span class="log-time">${time}</span><span class="log-${type}">${message}</span>`;
+      activityLog.insertBefore(entry, activityLog.firstChild);
+      
+      while (activityLog.children.length > 50) {
+        activityLog.removeChild(activityLog.lastChild);
+      }
+    }
+    
+    function updateCounts() {
+      document.getElementById('forwardCount').textContent = counts.forward;
+      document.getElementById('leftCount').textContent = counts.left;
+      document.getElementById('rightCount').textContent = counts.right;
+      document.getElementById('jumpCount').textContent = counts.jump;
+    }
+    
+    connectBtn.addEventListener('click', () => {
+      const url = serverInput.value.trim();
+      if (url) {
+        statusDot.className = 'status-dot connecting';
+        statusText.textContent = 'Connecting...';
+        ipcRenderer.send('connect-manual', url);
+      }
+    });
+    
+    disconnectBtn.addEventListener('click', () => {
+      ipcRenderer.send('disconnect');
+    });
+    
+    ipcRenderer.on('connection-status', (event, status) => {
+      if (status === 'connected') {
+        statusDot.className = 'status-dot connected';
+        statusText.textContent = 'Connected';
+        serverUrl.textContent = serverInput.value;
+        connectBtn.style.display = 'none';
+        disconnectBtn.style.display = 'block';
+        addLog('Connected to server');
+      } else {
+        statusDot.className = 'status-dot';
+        statusText.textContent = 'Disconnected';
+        serverUrl.textContent = 'No server connected';
+        connectBtn.style.display = 'block';
+        disconnectBtn.style.display = 'none';
+        addLog('Disconnected from server');
+      }
+    });
+    
+    ipcRenderer.on('movement', (event, data) => {
+      const direction = data.direction;
+      counts[direction] = (counts[direction] || 0) + 1;
+      updateCounts();
+      addLog(`Movement: ${direction.toUpperCase()} -> Key: ${direction === 'forward' ? 'W' : direction === 'left' ? 'A' : 'D'}`, direction);
+    });
+    
+    ipcRenderer.on('jump', () => {
+      counts.jump++;
+      updateCounts();
+      addLog('JUMP -> Key: SPACE', 'jump');
+    });
+    
+    ipcRenderer.on('server-found', (event, url) => {
+      discoveryCard.style.display = 'block';
+      const serverDiv = document.createElement('div');
+      serverDiv.className = 'discovered-server';
+      serverDiv.innerHTML = `
+        <span style="font-family: monospace; font-size: 12px;">${url}</span>
+        <button class="btn btn-primary" onclick="connectToServer('${url}')">Connect</button>
+      `;
+      discoveredServers.appendChild(serverDiv);
+      addLog(`Found server: ${url}`);
+    });
+    
+    window.connectToServer = (url) => {
+      serverInput.value = url;
+      connectBtn.click();
+    };
+    
+    ipcRenderer.send('get-status');
+  </script>
+</body>
+</html>
