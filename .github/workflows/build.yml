@@ -15,15 +15,30 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      
+      - name: Install Windows Build Tools
+        run: |
+          npm install --global windows-build-tools --vs2015
+        shell: powershell
+        continue-on-error: true
           
       - name: Install dependencies
-        run: npm install
+        run: npm install --build-from-source
+        env:
+          npm_config_msvs_version: 2022
+        
+      - name: Rebuild native modules
+        run: npm rebuild
         
       - name: Build Windows installer
         run: npm run build:win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Upload Windows installer
         uses: actions/upload-artifact@v4
         with:
           name: VSteps-Windows-Installer
-          path: dist/*.exe
+          path: |
+            dist/*.exe
+            dist/*.portable.exe
